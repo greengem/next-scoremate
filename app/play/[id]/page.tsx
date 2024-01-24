@@ -1,4 +1,4 @@
-import FetchBoardGameData from '@/data/FetchBoardGameData';
+import fetchBoardGameData from '@/data/FetchBoardGameData';
 import Image from 'next/image';
 
 interface PlayGamePageProps {
@@ -6,7 +6,7 @@ interface PlayGamePageProps {
 }
 
 export default async function PlayGamePage({ params } : PlayGamePageProps) {
-    const boardGame = await FetchBoardGameData(params.id);
+    const boardGame = await fetchBoardGameData(params.id);
     return (
         <>
             <h2>{boardGame.name}</h2>
