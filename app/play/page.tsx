@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export default function PlayPage() {
-    const gameId = '367150';
+    const gameId = '266192'; // Wingspan
 
     return(
         <>
