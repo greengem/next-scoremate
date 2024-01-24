@@ -7,7 +7,7 @@ interface NameEntry {
   };
 }
 
-export default async function FetchBoardGameData(gameId: string) {
+export default async function fetchBoardGameData(gameId: string) {
     const res = await fetch(`https://boardgamegeek.com/xmlapi/boardgame/${gameId}`);
 
     if (!res.ok) {
