@@ -22,8 +22,7 @@ export async function GameInstanceList() {
     <div>
       {gameInstances.map((gameInstance) => (
         <div key={gameInstance.id}>
-          <h4>Board Game: {gameInstance.boardGame.title}</h4>
-          <p>Date Played: {format(new Date(gameInstance.instanceDate), "yyyy-MM-dd HH:mm")}</p>
+          <h4 className='text-lg font-semibold'>{gameInstance.boardGame.title} - {format(new Date(gameInstance.createdAt), "dd-MM-yyyy HH:mm")}</h4>
           <p>Winner: {gameInstance.scores[0]?.user.username}</p>
           <ul>
             {gameInstance.scores.map(score => (
