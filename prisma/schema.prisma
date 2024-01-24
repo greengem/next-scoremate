@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,46 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  username  String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  scores    Score[]
+}
+
+model BoardGame {
+  id            String        @id @default(cuid())
+  title         String        @unique
+  description   String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  gameInstances GameInstance[]
+}
+
+model GameInstance {
+  id            String    @id @default(cuid())
+  instanceDate  DateTime
+  boardGame     BoardGame @relation(fields: [boardGameId], references: [id])
+  boardGameId   String
+  scores        Score[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([boardGameId])
+}
+
+model Score {
+  id              String        @id @default(cuid())
+  scoreValue      Int
+  user            User          @relation(fields: [userId], references: [id])
+  userId          String
+  gameInstance    GameInstance  @relation(fields: [gameInstanceId], references: [id])
+  gameInstanceId  String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([userId, gameInstanceId])
 }
