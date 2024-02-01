@@ -2,6 +2,7 @@ import { BoardGamesList } from "@/data/BoardGamesList";
 import { GameInstanceList } from "@/data/GameInstanceList";
 import { UsersList } from "@/data/UsersList";
 import FormRecordGame from "@/forms/FormRecordGame";
+import PageHeading from "@/ui/PageHeading";
 import Link from "next/link";
 import { Suspense } from "react";
 
@@ -20,6 +21,8 @@ function Card({ children } : { children: React.ReactNode }) {
 export default function HomePage() {
   return (
     <>
+      <PageHeading title="Home" />
+
       <FormRecordGame />
 
       <Card>
@@ -50,7 +53,7 @@ export default function HomePage() {
       </Card>
     
 
-      <Link href='/game'>/games</Link>
+      <Link href='/play'>/play</Link>
     </>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-
+import { Input } from '@nextui-org/input';
 export default function SearchForBoardGames() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -21,8 +21,9 @@ export default function SearchForBoardGames() {
 
     return (
         <div>
-            <input
-                placeholder='placeholder'
+            <Input
+                placeholder='Search for board games'
+                className='dark'
                 onChange={(e) => {
                     handleSearch(e.target.value);
                 }}
