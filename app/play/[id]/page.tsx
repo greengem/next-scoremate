@@ -14,10 +14,10 @@ export default async function PlayGamePage({ params } : PlayGamePageProps) {
         <>
             <PageHeading title={boardGame.name} />
             <div className='flex gap-2 mb-5'>
-                <Chip radius='none' size='sm'>{boardGame.yearPublished}</Chip>
-                <Chip radius='none' size='sm'>{boardGame.minPlayers}-{boardGame.maxPlayers} Players</Chip>
-                <Chip radius='none' size='sm'>Age: {boardGame.age}+</Chip>
-                <Chip radius='none' size='sm'>Playtime: {boardGame.minPlayTime}-{boardGame.maxPlayTime}m</Chip>
+                <Chip radius='none' size='sm' color='secondary'>{boardGame.yearPublished}</Chip>
+                <Chip radius='none' size='sm' color='secondary'>{boardGame.minPlayers}-{boardGame.maxPlayers} Players</Chip>
+                <Chip radius='none' size='sm' color='secondary'>Age: {boardGame.age}+</Chip>
+                <Chip radius='none' size='sm' color='secondary'>Playtime: {boardGame.minPlayTime}-{boardGame.maxPlayTime}m</Chip>
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                 <Image className='w-full h-auto' src={boardGame.image} alt='image' height={800} width={800} />

@@ -20,15 +20,13 @@ export default function SearchForBoardGames() {
     }, 300);
 
     return (
-        <div>
-            <Input
-                placeholder='Search for board games'
-                className='dark'
-                onChange={(e) => {
-                    handleSearch(e.target.value);
-                }}
-                defaultValue={searchParams.get('query')?.toString()}
-            />
-        </div>
+        <Input
+            placeholder='Search for board games'
+            className='mb-2'
+            onChange={(e) => {
+                handleSearch(e.target.value);
+            }}
+            defaultValue={searchParams.get('query')?.toString()}
+        />
     )
 }
