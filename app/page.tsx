@@ -22,7 +22,7 @@ export default function HomePage() {
   return (
     <>
       <PageHeading title="Home" />
-
+      {/*}
       <FormRecordGame />
 
       <Card>
@@ -52,7 +52,7 @@ export default function HomePage() {
         </ul>
       </Card>
     
-
+  */}
       <Link href='/play'>/play</Link>
     </>
   );
