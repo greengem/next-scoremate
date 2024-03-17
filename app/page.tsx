@@ -1,59 +1,23 @@
-import { BoardGamesList } from "@/data/BoardGamesList";
-import { GameInstanceList } from "@/data/GameInstanceList";
-import { UsersList } from "@/data/UsersList";
-import FormRecordGame from "@/forms/FormRecordGame";
+import { auth } from "@clerk/nextjs";
 import PageHeading from "@/ui/PageHeading";
-import Link from "next/link";
-import { Suspense } from "react";
+import prisma from "@/db/prisma";
 
-function SectionTitle({ title } : { title: string }) {
-  return (
-    <h3 className="text-2xl mb-2 font-semibold">{title}</h3>
-  )
-}
+export default async function HomePage() {
+  const { userId } = auth();
+  if (!userId) {
+    throw new Error("No user ID");
+  }
 
-function Card({ children } : { children: React.ReactNode }) {
-  return (
-    <div className="rounded-xl shadow-xl bg-zinc-200 p-5 mb-5">{children}</div>
-  )
-}
+  const games = await prisma.play.findMany({
+    where: {
+      creatorId: userId
+    },
+  });
 
-export default function HomePage() {
   return (
     <>
       <PageHeading title="Home" />
-      {/*}
-      <FormRecordGame />
-
-      <Card>
-        <SectionTitle title="All Board Games" />
-        <ul>
-          <Suspense fallback={<li>Loading Board Games</li>}>
-            <BoardGamesList />
-          </Suspense>
-        </ul>
-      </Card>
-
-      <Card>
-        <SectionTitle title="All Users" />
-        <ul>
-          <Suspense fallback={<li>Loading Users</li>}>
-            <UsersList />
-          </Suspense>
-        </ul>
-      </Card>
-
-      <Card>
-        <SectionTitle title="History" />
-        <ul>
-          <Suspense fallback={<li>Loading Game Instances</li>}>
-            <GameInstanceList />
-          </Suspense>
-        </ul>
-      </Card>
-    
-  */}
-      <Link href='/play'>/play</Link>
+      <pre>{JSON.stringify(games, null, 2)}</pre>    
     </>
   );
 }
