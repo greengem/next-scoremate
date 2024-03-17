@@ -42,6 +42,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  plays         Play[]    @relation("PlayToPlayers")
+  createdPlays  Play[]    @relation("PlayToCreator")
 }
 
 model VerificationToken {
@@ -50,4 +52,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Play {
+  id            String    @id @default(cuid())
+  gameId        String
+  creatorId     String
+  creator       User      @relation("PlayToCreator", fields: [creatorId], references: [id])
+  players       User[]    @relation("PlayToPlayers")
 }
