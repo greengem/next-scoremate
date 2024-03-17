@@ -54,10 +54,18 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Guest {
+  id      String @id @default(cuid())
+  name    String
+  avatar  String @default("guestAvatar.png")
+  plays   Play[] @relation("PlayToGuests")
+}
+
 model Play {
   id            String    @id @default(cuid())
   gameId        String
   creatorId     String
   creator       User      @relation("PlayToCreator", fields: [creatorId], references: [id])
   players       User[]    @relation("PlayToPlayers")
+  guests        Guest[]   @relation("PlayToGuests")
 }
