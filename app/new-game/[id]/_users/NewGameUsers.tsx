@@ -10,7 +10,7 @@ export default async function NewGameUsers() {
         <div>
             <h2 className="text-lg font-semibold">Players</h2>
             <CheckboxGroup>
-                <Checkbox value='value'>{session?.user?.name}</Checkbox>
+                <Checkbox value='value'>{session?.user?.name} (Me)</Checkbox>
             </CheckboxGroup>
         </div>
     );

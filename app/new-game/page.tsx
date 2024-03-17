@@ -9,9 +9,7 @@ export default async function PlayPage({ searchParams } : { searchParams?: { que
     return(
         <>
             <PageHeading title="Play" />
-
             <SearchForBoardGames />
-
             <Suspense fallback={<p>Loading search results</p>}>
                 <BoardGameSearchResults query={query} />
             </Suspense>
