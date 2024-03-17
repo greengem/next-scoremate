@@ -1,9 +1,16 @@
-import NextAuth from 'next-auth';
-import authConfig from './auth.config';
+import { authMiddleware } from "@clerk/nextjs";
  
-export default NextAuth(authConfig).auth;
+export default authMiddleware({
+  // Routes that can be accessed while signed out
+  publicRoutes: ['/'],
+  // Routes that can always be accessed, and have
+  // no authentication information
+  //ignoredRoutes: ['/no-auth-in-this-route'],
+});
  
 export const config = {
-  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  // Protects all routes, including api/trpc.
+  // See https://clerk.com/docs/references/nextjs/auth-middleware
+  // for more information about configuring your Middleware
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
