@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import fetchBoardGameData from '@/data/FetchBoardGameData';
 import PageHeading from '@/ui/PageHeading';
 import NewGameStartGame from './_StartGame/NewGameStartGame';
@@ -8,12 +8,16 @@ interface PlayGamePageProps {
 }
 
 export default async function PlayGamePage({ params } : PlayGamePageProps) {
-    const { userId } = auth();
-    if (!userId) {
-      throw new Error("No user ID");
+    const user = await currentUser()
+    if (!user) {
+        throw new Error('User not found');
     }
+    const userId = user?.id;
+    const userName = user?.firstName || 'User';
+    const userAvatar = user?.imageUrl || '';
 
     const boardGame = await fetchBoardGameData(params.id);
+
     const pageTitle = `New Game of ${boardGame.name}`;
 
     return (
@@ -21,7 +25,9 @@ export default async function PlayGamePage({ params } : PlayGamePageProps) {
             <PageHeading title={pageTitle} />
             <NewGameStartGame 
                 gameId={params.id}
-                creator={session}
+                userId={userId}
+                userName={userName}
+                userAvatar={userAvatar}
             />
         </>
     )
