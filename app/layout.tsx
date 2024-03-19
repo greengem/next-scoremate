@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="w-full min-h-dvh bg-pink-100">
+      <html lang="en" className="w-full min-h-dvh" suppressHydrationWarning>
         <body className={`w-full ${inter.className}`}>
           <Providers>
             <Navbar />
