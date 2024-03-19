@@ -24,14 +24,14 @@ export default async function PlayGamePage({ params } : PlayGamePageProps) {
     const pageTitle = `New Game of ${boardGame.name}`;
 
     return (
-        <>
-            <PageHeading title={pageTitle} />
+        <div className="flex flex-col grow items-center justify-center">
+            {/* <PageHeading title={pageTitle} /> */}
             <PlayerSelect
                 gameId={params.id}
                 creatorId={userId}
                 creatorName={userName}
                 creatorAvatar={userAvatar}
             />
-        </>
+        </div>
     )
 }
