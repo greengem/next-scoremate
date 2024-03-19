@@ -9,6 +9,7 @@ import { Divider } from '@nextui-org/react';
 import { Reorder } from "framer-motion";
 import PlayerSelectTabs from './PlayerSelectTabs';
 import {Popover, PopoverTrigger, PopoverContent} from "@nextui-org/popover";
+import Image from 'next/image';
 
 type PlayerType = {
     id: string;
@@ -121,10 +122,12 @@ export default function NewGameStartGame({
                                         <PopoverContent>
                                             <div className="grid grid-cols-5 w-full gap-3 px-1 py-2">
                                                 {preGeneratedAvatarUrls.map((avatarUrl, index) => (
-                                                    <img 
+                                                    <Image 
                                                         key={index} 
                                                         src={avatarUrl} 
                                                         alt={`Avatar ${index}`} 
+                                                        height={16}
+                                                        width={16}
                                                         className="w-16 h-16 m-1 cursor-pointer" 
                                                         onClick={() => assignAvatarToGuest(player.id, avatarUrl)}
                                                     />
