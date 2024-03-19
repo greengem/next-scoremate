@@ -26,7 +26,15 @@ export default function PlayerSelectTabs({
 ){
 
     return (
-        <Tabs aria-label="Add Players" fullWidth color='primary'>
+        <Tabs 
+            aria-label="Add Players" 
+            fullWidth 
+            color='primary'
+            classNames={{
+                tabList: 'bg-ctp-base',
+                tab: 'bg-ctp-crust',
+            }}
+        >
             <Tab 
                 key="friend"
                 title={
@@ -61,8 +69,11 @@ export default function PlayerSelectTabs({
                         value={guestName} 
                         onChange={(e) => setGuestName(e.target.value)} 
                         className='grow'
+                        classNames={{
+                            inputWrapper: 'bg-ctp-base',
+                        }}
                     />
-                    <Button variant='flat' radius='sm' isIconOnly size='lg' className="shrink-0" onClick={addGuest}><IconPlus /></Button> 
+                    <Button variant='flat' radius='sm' isIconOnly size='lg' className="shrink-0 bg-ctp-mauve text-ctp-crust" onClick={addGuest}><IconPlus /></Button> 
                 </div>
 
             </Tab>
