@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/ui/Navbar";
 import { ClerkProvider } from '@clerk/nextjs'
+import MainSidebar from "@/ui/Sidebar/MainSidebar";
+import SecondarySidebar from "@/ui/Sidebar/SecondarySidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className="w-full min-h-dvh" suppressHydrationWarning>
-        <body className={`w-full ${inter.className}`}>
+      <html lang="en" className="flex flex-col min-h-dvh bg-ctp-base" suppressHydrationWarning>
+        <body className={`flex flex-col grow ${inter.className}`}>
           <Providers>
             <Navbar />
-            <main className="p-5">
-              {children}
-            </main>
+            <div className="flex grow">
+              <MainSidebar />
+              <SecondarySidebar />
+              <main className="flex flex-col grow p-5 ml-80">
+                {children}
+              </main>
+            </div>
           </Providers>
         </body>
       </html>
