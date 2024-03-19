@@ -41,3 +41,31 @@ export async function handleStartGame(data: StartGameData) {
 
     redirect(`/game/${createdPlay.id}`);
 }
+
+
+type ScoreData = {
+    playerId: string;
+    value: number;
+};
+
+type SaveScoresData = {
+    playId: string;
+    scores: ScoreData[];
+};
+
+export async function handleSaveScores(data: SaveScoresData) {
+    const { playId, scores } = data;
+
+    await prisma.play.update({
+        where: { id: playId },
+        data: {
+            isCompleted: true,
+            scores: {
+                create: scores.map(score => ({
+                    playerId: score.playerId,
+                    value: score.value
+                }))
+            }
+        }
+    });
+}
