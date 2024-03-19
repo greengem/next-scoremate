@@ -16,6 +16,7 @@ model Play {
   creatorId     String
   players       Player[]
   scores        Score[]
+  isCompleted   Boolean   @default(false)
 
   @@index([gameId, date])
 }
