@@ -18,7 +18,7 @@ export function ThemeSwitcher() {
     <div className="flex gap-2 items-center">
       <button onClick={() => setTheme('light')}><IconSunHigh /></button>
       <button onClick={() => setTheme('dark')}><IconMoonStars /></button>
-      <button onClick={() => setTheme('dark')}><IconDeviceDesktop /></button>
+      <button onClick={() => setTheme('system')}><IconDeviceDesktop /></button>
     </div>
   )
 };
