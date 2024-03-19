@@ -7,17 +7,35 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Guest {
-  id      String @id @default(cuid())
-  name    String
-  avatar  String @default("guestAvatar.png")
-  plays   Play[] @relation("PlayToGuests")
-}
-
 model Play {
   id            String    @id @default(cuid())
   gameId        String
+  date          DateTime  @default(now())
+  location      String?   // Optional: where the game was played
+  notes         String?   // Optional: additional information about the game session
   creatorId     String
-  players       String[]
-  guests        Guest[]   @relation("PlayToGuests")
+  players       Player[]
+  scores        Score[]
+
+  @@index([gameId, date])
+}
+
+model Player {
+  id           String     @id @default(uuid())
+  play         Play       @relation(fields: [playId], references: [id])
+  playId       String
+  userId       String?    // Nullable: exists for registered users
+  guestName    String?    // Nullable: name provided for guests
+  guestAvatar  String?    // Nullable: name provided for guests
+  order        Int        // Order of the player in the game
+  scores       Score[]
+}
+
+model Score {
+  id          String   @id @default(uuid())
+  value       Int
+  player      Player   @relation(fields: [playerId], references: [id])
+  playerId    String
+  play        Play     @relation(fields: [playId], references: [id])
+  playId      String
 }
