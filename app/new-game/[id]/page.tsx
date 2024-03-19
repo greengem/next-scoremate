@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import fetchBoardGameData from '@/data/FetchBoardGameData';
 import PageHeading from '@/ui/PageHeading';
 import PlayerSelect from './PlayerSelect';
@@ -25,7 +25,6 @@ export default async function PlayGamePage({ params } : PlayGamePageProps) {
 
     return (
         <div className="flex flex-col grow items-center justify-center">
-            {/* <PageHeading title={pageTitle} /> */}
             <PlayerSelect
                 gameId={params.id}
                 creatorId={userId}
