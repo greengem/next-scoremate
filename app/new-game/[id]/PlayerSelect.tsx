@@ -1,4 +1,5 @@
 'use client'
+import cuid from 'cuid';
 import { useState } from 'react';
 import { Button } from "@nextui-org/button";
 import { handleStartGame } from '@/server-actions/GameServerActions';
@@ -13,7 +14,6 @@ import Image from 'next/image';
 
 type PlayerType = {
     id: string;
-    userId: string | null;
     name: string;
     avatar: string | undefined;
     isGuest: boolean;
@@ -35,16 +35,17 @@ const friends = [
     { label: 'John Smith', value: 'john-smith' }
 ];
 
-const generateUniqueId = () => `guest-${Math.random().toString(36).substring(2, 11)}`;
-
-
 export default function NewGameStartGame({
     gameId,
+    gameTitle,
+    gameImage,
     creatorId,
     creatorName,
     creatorAvatar
 }: {
     gameId: string;
+    gameTitle: string;
+    gameImage: string;
     creatorId: string;
     creatorName: string;
     creatorAvatar: string | undefined;
@@ -52,19 +53,19 @@ export default function NewGameStartGame({
     const [players, setPlayers] = useState<PlayerType[]>([
         { 
             id: creatorId,
-            userId: creatorId,
             name: creatorName, 
             avatar: creatorAvatar, 
             isGuest: false, 
             userType: 'Creator' 
         }
     ]);
+    //console.log('players:', players);
     
     const [guestName, setGuestName] = useState('');
 
     const addGuest = () => {
-        const guestId = generateUniqueId();
-        setPlayers([...players, { id: guestId, userId: null, name: guestName, avatar: undefined, isGuest: true, userType: 'Guest' }]);
+        const guestId = 'guest-' + cuid();
+        setPlayers([...players, { id: guestId, name: guestName, avatar: undefined, isGuest: true, userType: 'Guest' }]);
         setGuestName('');
     };
     
@@ -76,14 +77,18 @@ export default function NewGameStartGame({
     const startGame = (event: React.FormEvent) => {
         event.preventDefault();
         const playerData = players.map((player, index) => ({
-            userId: player.userId,
+            id: player.id,
             name: player.name,
             avatar: player.avatar || null,
-            order: index
+            order: index,
+            isGuest: player.isGuest
         }));
+        console.log('playerData:', playerData);
         handleStartGame({ gameId, players: playerData });
     };
-
+    
+    
+    
     const assignAvatarToGuest = (guestId: string, avatarUrl: string) => {
         setPlayers(players.map(player => {
             if (player.id === guestId) {
@@ -95,7 +100,10 @@ export default function NewGameStartGame({
     
     return (
         <Card shadow='none' className='bg-ctp-surface0 shadow-lg text-ctp-text w-full max-w-96 mx-auto'>
-            <CardHeader className='text-lg font-semibold pb-0'>Add Players</CardHeader>
+            <CardHeader className='flex flex-row gap-3'>
+                <Image src={gameImage} alt="Game Image" width={48} height={48} className='w-10 aspect-square object-cover object-top rounded-lg' />
+                <p className='text-xl font-semibold'>{gameTitle}</p>
+            </CardHeader>
             <CardBody>
                 
                 <PlayerSelectTabs 
