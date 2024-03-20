@@ -1,13 +1,15 @@
 'use server';
 import prisma from '@/db/prisma';
 import { auth } from "@clerk/nextjs";
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation'
 
 type PlayerData = {
-    userId: string | null;
-    name: string | null;
+    id: string;
+    name: string;
     avatar: string | null;
     order: number;
+    isGuest: boolean;
 };
 
 type StartGameData = {
@@ -30,10 +32,11 @@ export async function handleStartGame(data: StartGameData) {
             creatorId: userId,
             players: {
                 create: players.map(player => ({
-                    userId: player.userId,
-                    guestName: player.userId ? null : player.name,
-                    guestAvatar: player.userId ? null : player.avatar,
-                    order: player.order
+                    userId: player.id,
+                    guestName: player.isGuest ? player.name : null,
+                    guestAvatar: player.isGuest ? player.avatar : null,
+                    order: player.order,
+                    isGuest: player.isGuest
                 }))
             }
         }
@@ -41,6 +44,7 @@ export async function handleStartGame(data: StartGameData) {
 
     redirect(`/game/${createdPlay.id}`);
 }
+
 
 
 type ScoreData = {
@@ -54,6 +58,12 @@ type SaveScoresData = {
 };
 
 export async function handleSaveScores(data: SaveScoresData) {
+    const { userId } = auth();
+
+    if (!userId) {
+        throw new Error("No user ID");
+    }
+
     const { playId, scores } = data;
 
     await prisma.play.update({
@@ -68,4 +78,29 @@ export async function handleSaveScores(data: SaveScoresData) {
             }
         }
     });
+    redirect('/dashboard');
+}
+
+export async function handleDeletePlay(playId: string) {
+    const { userId } = auth();
+
+    if (!userId) {
+        throw new Error("No user ID");
+    }
+
+    await prisma.score.deleteMany({
+        where: { playId }
+    });
+
+    // Delete associated Player records
+    await prisma.player.deleteMany({
+        where: { playId }
+    });
+
+    // Delete the Play record
+    await prisma.play.delete({
+        where: { id: playId }
+    });
+
+    revalidatePath('/dashboard');
 }
