@@ -25,7 +25,8 @@ model Player {
   id           String     @id @default(uuid())
   play         Play       @relation(fields: [playId], references: [id])
   playId       String
-  userId       String?    // Nullable: exists for registered users
+  userId       String    // Nullable: exists for registered users
+  isGuest      Boolean
   guestName    String?    // Nullable: name provided for guests
   guestAvatar  String?    // Nullable: name provided for guests
   order        Int        // Order of the player in the game
