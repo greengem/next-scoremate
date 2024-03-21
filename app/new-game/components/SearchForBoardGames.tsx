@@ -1,7 +1,8 @@
 'use client';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-import { Input } from '@nextui-org/input';
+import CustomInput from '@/ui/CustomNextUI/CustomInput';
+
 export default function SearchForBoardGames() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -20,7 +21,8 @@ export default function SearchForBoardGames() {
     }, 300);
 
     return (
-        <Input
+        <CustomInput 
+            label='Search'
             placeholder='Search for board games'
             className='mb-2'
             onChange={(e) => {
