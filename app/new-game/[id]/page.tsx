@@ -14,13 +14,11 @@ export default async function PlayGamePage({ params } : PlayGamePageProps) {
         throw new Error('User not found');
     }
     const userId = user?.id;
-    const userName = user?.firstName || 'User';
+    const userName = user?.username || 'User';
     const userAvatar = user?.imageUrl || '';
 
     // Get game info
     const boardGame = await fetchBoardGameData(params.id);
-
-    // console.log(boardGame);
 
     // Set page title
     const pageTitle = `New Game of ${boardGame.name}`;
