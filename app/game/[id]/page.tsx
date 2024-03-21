@@ -23,14 +23,14 @@ export default async function Page({ params } : { params: { id: string } }) {
     if (!player.isGuest) {
       const userData = await clerkClient.users.getUser(player.userId);
       return { 
-        id: player.userId,
+        id: player.id,
         username: userData.username, 
         imageUrl: userData.imageUrl, 
         order: player.order 
       };
     } else {
       return { 
-        id: player.userId,
+        id: player.id,
         username: player.guestName, 
         imageUrl: player.guestAvatar, 
         order: player.order 
