@@ -73,13 +73,15 @@ export async function handleSaveScores(data: SaveScoresData) {
             scores: {
                 create: scores.map(score => ({
                     playerId: score.playerId,
-                    value: score.value
-                }))
-            }
-        }
+                    value: score.value,
+                })),
+            },
+        },
     });
-    redirect('/dashboard');
+
+    redirect(`/dashboard`);
 }
+
 
 export async function handleDeletePlay(playId: string) {
     const { userId } = auth();
