@@ -5,6 +5,7 @@ import { Tabs, Tab } from "@nextui-org/tabs";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/autocomplete";
 import { Input } from '@nextui-org/input';
 import { Button } from '@nextui-org/button';
+import CustomInput from '@/ui/CustomNextUI/CustomInput';
 
 type FriendItem = {
     value: string;
@@ -63,15 +64,11 @@ export default function PlayerSelectTabs({
                 }
             >
                 <div className="flex gap-2 items-center">
-                    <Input 
+                    <CustomInput 
                         label="Guest" placeholder="Guest name..."
-                        size='sm' 
                         value={guestName} 
                         onChange={(e) => setGuestName(e.target.value)} 
                         className='grow'
-                        classNames={{
-                            inputWrapper: 'bg-ctp-base',
-                        }}
                     />
                     <Button variant='flat' radius='sm' isIconOnly size='lg' className="shrink-0 bg-ctp-mauve text-ctp-crust" onClick={addGuest}><IconPlus /></Button> 
                 </div>
