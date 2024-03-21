@@ -2,6 +2,7 @@
 import { handleDeletePlay } from "@/server-actions/GameServerActions";
 import { useTransition } from "react";
 import { Button } from "@nextui-org/button";
+import { IconTrash } from "@tabler/icons-react";
 
 export default function DeletePlayButton({
     playId
@@ -19,8 +20,8 @@ export default function DeletePlayButton({
       };
 
     return (
-        <Button onClick={handleClick} isDisabled={isPending}>
-            Delete
+        <Button isIconOnly size="sm" onClick={handleClick} isDisabled={isPending}>
+            <IconTrash size={20} />
         </Button>
     )
 }
